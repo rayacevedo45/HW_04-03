@@ -1,6 +1,9 @@
 package hw0403;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -28,45 +31,55 @@ import java.util.Scanner;
 public class DistributionCalculator
 {
 
-    public static ArrayList<Double> calculate(File textFile) throws FileNotFoundException
+    public static int[] calculate(File textFile)
     {
+        int[] result = new int[26];
 
-        ArrayList<Double> percentage = new ArrayList<Double>();
-        int totalNumbersOfLetters = 0;
-        HashMap<Character, Integer> percentageTable = new HashMap<Character, Integer>();
-        for(int i = 0; i < 26; i++)
+        try
         {
-            percentageTable.put((char) (i + 97), 0);
-        }
-        Scanner input = new Scanner(textFile);
-        String word;
-        while(input.hasNext())
-        {
-            word = input.next();
+            BufferedReader br = new BufferedReader(new FileReader(textFile));
+            String line;
 
-            for(int i = 0; i < word.length(); i++)
+
+            while((line = br.readLine()) != null)
             {
-                char c = word.toLowerCase().charAt(i);
-                if(Character.isLetter(c))
-                {
-                    percentageTable.put(c, percentageTable.get(c) + 1);
-                    totalNumbersOfLetters++;
+                String lowerLine = line.toLowerCase();
+                for (int i = 0; i < lowerLine.length(); i++){
+                    char letter = lowerLine.charAt(i);
+                    //System.out.println(letter);
+                    int letterValue = (int)letter-97;
+                    if (letterValue >= 0 && letterValue <= 25){
+                        result[letterValue] = result[letterValue] + 1;
+                    }
 
                 }
             }
+
         }
-        for(int count : percentageTable.values())
+        catch(IOException q)
         {
-            double percentagee = (double) (count * 100) / totalNumbersOfLetters;
-            percentage.add(percentagee);
+            System.out.println("Error reading file");
         }
-        return percentage;
+
+        int totalNumOfLetters = 0;
+        for (int i = 0; i < result.length; i++)
+        { totalNumOfLetters = totalNumOfLetters + result[i];
+
+        }
+        for (int i = 0; i < result.length; i++)
+        {
+            System.out.println("" + (char)(i
+                    +97 )+" "+ ((double)100*result[i]/totalNumOfLetters)+"%");
+
+        }return result;
     }
 
     public static void main(String[] args) throws FileNotFoundException
     {
         File file = new File("/Users/c4q-raynaldie/Desktop/accesscode/HW_04-03/moby dick.txt");
-        ArrayList<Double> list = calculate(file);
-        System.out.println(list);
-    }
+        int[] result = calculate(file);
+
+
+        }
+
 }

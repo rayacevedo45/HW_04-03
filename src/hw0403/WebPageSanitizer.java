@@ -16,7 +16,7 @@ package hw0403;
 
 public class WebPageSanitizer
 {
-    static String initialHtml  = " ";
+    static String initialHtml  = "<html><head><script>hi</script></head><body><script>script2</script></body></html>";
     static String startScript  = "<script>";
     static String endScript    = "</script>";
     static int    scriptLength = startScript.length();
@@ -25,29 +25,26 @@ public class WebPageSanitizer
     {
         String testHtml = html;
         int startIndex = 0;
-        int startSearchAt = 0;
+        //int startSearchAt = 0;
         while((startIndex > - 1))
+
         {
             startIndex = testHtml.indexOf(startScript);
             if(startIndex > - 1)
             {
                 int endIndex = testHtml.indexOf(endScript);
                 String cleanHtmlBefore = testHtml.substring(0, startIndex);
-                String cleanHtmlAfter = testHtml
-                        .substring(endIndex + 1 + scriptLength, testHtml.length());
-                String finished = cleanHtmlBefore + cleanHtmlAfter;
-                return finished;
+                String cleanHtmlAfter = testHtml.substring(endIndex + 1 + scriptLength, testHtml.length());
+                testHtml = cleanHtmlBefore + cleanHtmlAfter;
+
             }
         }
-        return null;
+        return testHtml;
+    }
+
+
+    public static void main(String[] args)
+    {
+        System.out.println(sanitize(initialHtml));
     }
 }
-
-//    public static void main(String[] args)
-//    {
-//
-//        String cws = sanitize(initialHtml);
-//        System.out.println(cws);
-//
-//    }
-//}
