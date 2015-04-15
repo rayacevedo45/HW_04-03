@@ -68,8 +68,7 @@ public class DistributionCalculator
         }
         for (int i = 0; i < result.length; i++)
         {
-            System.out.println("" + (char)(i
-                    +97 )+" "+ ((double)100*result[i]/totalNumOfLetters)+"%");
+            System.out.println("" + (char)(i +97 )+" "+ ((double)100*result[i]/totalNumOfLetters)+"%");
 
         }return result;
     }
